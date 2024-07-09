@@ -1,0 +1,23 @@
+<h1>Detalle del Producto</h1>
+<div>
+    <h2>{{producto.title}}</h2>
+    <p>{{producto.description}}</p>
+    <p>Precio: {{producto.price}}</p>
+    <p>Categoría: {{producto.category}}</p>
+    <p>Stock: {{producto.stock}}</p>
+    <button onclick="agregarAlCarrito('{{producto._id}}')">Agregar al carrito</button>
+</div>
+
+<script>
+    async function agregarAlCarrito(productId) {
+        const idCarrito = prompt('Ingrese el id del carrito')
+        const response = await fetch(`/api/cart/${idCarrito}/product/${productId}`, {
+            method: 'POST'
+        });
+        if (response.ok) {
+            alert('Producto agregado al carrito');
+        } else {
+            alert('Error al agregar el producto al carrito');
+        }
+    }
+</script>

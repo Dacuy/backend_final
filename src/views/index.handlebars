@@ -1,0 +1,44 @@
+<h1>Productos</h1>
+<ul>
+    {{#each productos}}
+    <div class="CardProdNoUp">
+        <h2 class="tituloProdNoUp">Producto: {{title}}</h2>
+        <p class="DescProdNoUp">{{description}}</p>
+        <p class="PriceProdNoUp">Precio: {{price}}</p>
+        <p class="StockProdNoUp">Cantidad de stock: {{stock}}</p>
+        <p class="CategoryProdNoUp">Categoria: {{category}}</p>
+        <p class="IdCategoryProdNoUp">Id: {{id}}</p>
+        <a href="/productos/{{_id}}">Ver detalles</a>
+        <button onclick="agregarAlCarrito('{{_id}}')">Agregar al carrito</button>
+        <br>
+    </div>
+    {{/each}}
+</ul>
+
+<div>
+    {{#if currentPage}}
+    <p>Página {{currentPage}} de {{totalPages}}</p>
+    <nav>
+        {{#if hasPrevPage}}
+        <a href="/productos?page={{prevPage}}&limit={{productsPerPage}}">Anterior</a>
+        {{/if}}
+        {{#if hasNextPage}}
+        <a href="/productos?page={{nextPage}}&limit={{productsPerPage}}">Siguiente</a>
+        {{/if}}
+    </nav>
+    {{/if}}
+</div>
+
+<script>
+    async function agregarAlCarrito(productId) {
+        const idCarrito = prompt('Inserte el id de su carrito')
+        const response = await fetch(`/api/carts/${idCarrito}/product/${productId}`, {
+            method: 'POST'
+        });
+        if (response.ok) {
+            alert('Producto agregado al carrito');
+        } else {
+            alert('Error al agregar el producto al carrito');
+        }
+    }
+</script>
